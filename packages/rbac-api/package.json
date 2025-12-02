@@ -12,7 +12,7 @@
   "dependencies": {
     "@tokpulse/db": "workspace:*",
     "@tokpulse/rbac": "workspace:*",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "express-rate-limit": "^7.5.1"
   },
   "devDependencies": {

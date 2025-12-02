@@ -15,7 +15,7 @@
     "@tokpulse/db": "workspace:*",
     "@tokpulse/shared": "workspace:*",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "express-rate-limit": "^7.5.1",
     "helmet": "^7.2.0"
   },
