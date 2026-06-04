@@ -21,7 +21,7 @@
     "@shopify/app-bridge-react": "^3.7.10",
     "@shopify/cli": "^3.86.1",
     "@shopify/graphql-client": "^0.10.4",
-    "@shopify/hydrogen": "^2024.10.1",
+    "@shopify/hydrogen": "^2026.4.2",
     "@shopify/hydrogen-react": "^2024.10.1",
     "@shopify/polaris": "^12.27.0",
     "@shopify/polaris-icons": "^7.13.0",
