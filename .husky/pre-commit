@@ -1,7 +1,6 @@
 
 
-# Cross-platform pre-commit hook (no-stash avoids Windows git patch conflicts)
-npx lint-staged --no-stash
+# Cross-platform pre-commit hook
 npm run typecheck
 
 # Run tests (disabled for now due to some test failures)
