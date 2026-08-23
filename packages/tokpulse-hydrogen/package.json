@@ -24,7 +24,7 @@
     "@shopify/hydrogen": "^2024.10.1",
     "@shopify/hydrogen-react": "^2024.10.1",
     "@shopify/polaris": "^12.27.0",
-    "@shopify/polaris-icons": "^7.13.0",
+    "@shopify/polaris-icons": "^9.3.1",
     "@shopify/theme": "^3.58.2",
     "axios": "^1.13.5",
     "clsx": "^2.1.1",
