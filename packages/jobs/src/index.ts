@@ -1,3 +1,4 @@
-export * from './webhook-processor'
-export * from './catalog-sync'
-export * from './creative-generation'
+export * from './webhook-processor';
+export * from './catalog-sync';
+export * from './creative-generation';
+export * from './tiktok-sync';

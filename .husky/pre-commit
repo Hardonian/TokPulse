@@ -1,10 +1,7 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
-# Run lint-staged
-npx lint-staged
 
-# Run type checking
+# Cross-platform pre-commit hook (no-stash avoids Windows git patch conflicts)
+npx lint-staged --no-stash
 npm run typecheck
 
 # Run tests (disabled for now due to some test failures)
