@@ -404,3 +404,86 @@ model BillingWebhook {
 
   @@map("billing_webhooks")
 }
+
+model Creator {
+  id               String   @id @default(cuid())
+  orgId            String
+  handle           String   @unique
+  name             String
+  email            String   @unique
+  platform         String   @default("TIKTOK") // TIKTOK, INSTAGRAM, YOUTUBE
+  commissionRate   Float    @default(10.0) // Percentage
+  tier             String   @default("MICRO") // MICRO, MID, MACRO, VIP
+  status           String   @default("ACTIVE") // ACTIVE, PAUSED, SUSPENDED
+  payoutAddress    String?  // Stripe Connect Account ID or PayPal email
+  totalEarningsUsd Float    @default(0.0)
+  totalPaidUsd     Float    @default(0.0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  links            CreatorLink[]
+  payouts          CreatorPayout[]
+
+  @@index([orgId])
+  @@index([handle])
+  @@index([status])
+  @@map("creators")
+}
+
+model CreatorLink {
+  id          String   @id @default(cuid())
+  creatorId   String
+  storeId     String
+  code        String   @unique
+  targetUrl   String
+  clicksCount Int      @default(0)
+  ordersCount Int      @default(0)
+  revenueUsd  Float    @default(0.0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  creator     Creator  @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@index([creatorId])
+  @@index([storeId])
+  @@index([code])
+  @@map("creator_links")
+}
+
+model CreatorPayout {
+  id        String   @id @default(cuid())
+  creatorId String
+  orgId     String
+  amountUsd Float
+  currency  String   @default("USD")
+  status    String   @default("PENDING") // PENDING, PROCESSING, COMPLETED, FAILED
+  txHash    String?  // Stripe Transfer ID / Payment Reference
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  creator   Creator  @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@index([creatorId])
+  @@index([orgId])
+  @@index([status])
+  @@map("creator_payouts")
+}
+
+model TikTokShopConnection {
+  id           String   @id @default(cuid())
+  storeId      String   @unique
+  shopCipher   String
+  accessToken  String
+  refreshToken String?
+  syncStatus   String   @default("SYNCED") // SYNCED, SYNCING, ERROR, PAUSED
+  lastSyncedAt DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([syncStatus])
+  @@map("tiktok_shop_connections")
+}

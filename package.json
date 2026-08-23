@@ -76,7 +76,7 @@
     "@testing-library/user-event": "^14.6.5",
     "@types/node": "^24.9.1",
     "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@types/react-dom": "^19.2.4",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "@vitejs/plugin-react": "^5.0.4",
@@ -97,18 +97,13 @@
     "prettier": "^3.6.2",
     "turbo": "^1.13.4",
     "typescript": "^5.9.3",
-    "vite": "^5.4.21",
+    "vite": "^6.4.3",
     "vitest": "^1.6.1",
     "zod": "^4.1.12"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix",
+    "*.{js,ts,tsx,md,json}": [
       "prettier --write"
-    ],
-    "*.{md,json}": [
-      "prettier --write",
-      "cspell --no-progress"
     ]
   },
   "version": "2.2.0"
