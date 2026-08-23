@@ -1,0 +1,57 @@
+{% schema %}
+{
+  "name": "TikTok Carousel",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Seen on TikTok"
+    },
+    {
+      "type": "text",
+      "id": "hashtag",
+      "label": "Hashtag to feature",
+      "default": "#tokpulse"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="tokpulse-tiktok-carousel">
+  <h2 class="tokpulse-heading">{{ block.settings.heading }}</h2>
+  <div class="tokpulse-videos-container">
+    <!-- Placeholder for TikTok video embeds -->
+    <div class="tokpulse-video-placeholder" style="background: #000; color: #fff; padding: 2rem; border-radius: 8px; text-align: center;">
+      <p>TikTok videos for {{ block.settings.hashtag }} will load here.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tokpulse-tiktok-carousel {
+    padding: 2rem 0;
+    margin: 2rem 0;
+    border-top: 1px solid #eee;
+  }
+  .tokpulse-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .tokpulse-videos-container {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  .tokpulse-video-placeholder {
+    flex: 0 0 300px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
