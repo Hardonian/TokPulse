@@ -1,55 +1,437 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './index.css';
+
+interface Product {
+  id: string;
+  title: string;
+  price: number;
+  commissionRate: number;
+  category: string;
+  imageUrl: string;
+  trendingScore: number;
+}
+
+const SAMPLE_PRODUCTS: Product[] = [
+  {
+    id: 'prod_cyber_earbuds',
+    title: 'AeroPulse Wireless ANC Earbuds (Noise Cancelling)',
+    price: 69.99,
+    commissionRate: 15,
+    category: 'Tech / Audio',
+    imageUrl: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&q=80',
+    trendingScore: 96
+  },
+  {
+    id: 'prod_studio_light',
+    title: 'LuminaPro RGB Magnetic Creator Ring Light',
+    price: 49.50,
+    commissionRate: 18,
+    category: 'Creator Gear',
+    imageUrl: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=300&q=80',
+    trendingScore: 91
+  },
+  {
+    id: 'prod_hydration_flask',
+    title: 'HydroAesthetic Matte Vacuum Smart Tumbler (32oz)',
+    price: 34.00,
+    commissionRate: 20,
+    category: 'Lifestyle / Wellness',
+    imageUrl: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=300&q=80',
+    trendingScore: 88
+  }
+];
 
 export default function App() {
+  const [selectedProduct, setSelectedProduct] = useState<Product>(SAMPLE_PRODUCTS[0]);
+  const [hookStrategy, setHookStrategy] = useState<'curiosity_gap' | 'contrarian' | 'problem_solution' | 'unboxing'>('curiosity_gap');
+  const [generatedLink, setGeneratedLink] = useState('');
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedScript, setCopiedScript] = useState(false);
+  const [showQr, setShowQr] = useState(false);
+
+  const handleGenerateLink = (product: Product) => {
+    const timestamp = Date.now();
+    const mockToken = btoa(JSON.stringify({ c_id: 'cr_tiktok_alex', p_id: product.id, ts: timestamp })).substring(0, 16);
+    const url = `https://store.tokpulse.com/products/${product.id}?tat=${mockToken}&ref=alexcreates&utm_source=tiktok`;
+    setGeneratedLink(url);
+    setCopiedLink(false);
+  };
+
+  const copyToClipboard = (text: string, isScript = false) => {
+    navigator.clipboard.writeText(text);
+    if (isScript) {
+      setCopiedScript(true);
+      setTimeout(() => setCopiedScript(false), 2500);
+    } else {
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2500);
+    }
+  };
+
+  const getHookContent = () => {
+    switch (hookStrategy) {
+      case 'curiosity_gap':
+        return {
+          hook: "Nobody on TikTok is talking about this $40 gadget, and it's already sold out twice...",
+          vpi: 94,
+          pacing: "0-3s Hook → 3-12s Reveal & Features → 12-22s ASMR Demo → 22-30s Shop Link CTA",
+          scriptBody: [
+            `I finally got my hands on the ${selectedProduct.title}.`,
+            "The build quality is insane and it outperforms brands 3x the price.",
+            "Tap the orange TikTok Shop cart below before the restock runs dry!"
+          ],
+          veoPrompt: `Cinematic 9:16 vertical 4K macro shot of ${selectedProduct.title}, neon ambient lighting, ASMR unboxing, crisp sound effects, ultra-realistic.`
+        };
+      case 'contrarian':
+        return {
+          hook: "Why spending $200 on big-brand gear is the biggest mistake creators are making in 2026.",
+          vpi: 91,
+          pacing: "0-3s Disruption Hook → 3-15s Direct Comparison → 15-24s Proof → 24-30s Flash Promo CTA",
+          scriptBody: [
+            `Here's why the ${selectedProduct.title} makes premium alternatives look obsolete.`,
+            "Same titanium alloy finish, double the battery life, and half the price.",
+            "Claim the flash creator discount with the link below!"
+          ],
+          veoPrompt: `Split-screen comparison shot 9:16 vertical, sleek modern studio lighting, dynamic camera push-in on ${selectedProduct.title}.`
+        };
+      case 'problem_solution':
+        return {
+          hook: "If you struggle with poor audio or lighting in your videos, stop scrolling right now.",
+          vpi: 89,
+          pacing: "0-2s Pain Point → 2-10s Solution Introduction → 10-20s Before/After → 20-30s Discount CTA",
+          scriptBody: [
+            `This single tool — the ${selectedProduct.title} — completely transformed my workflow.`,
+            "Instant plug-and-play setup with zero latency.",
+            "Click below to get 15% off with my creator code!"
+          ],
+          veoPrompt: `Dramatic before-and-after lighting transformation vertical video, high-contrast, lifestyle influencer background.`
+        };
+      case 'unboxing':
+        return {
+          hook: "Satisfying ASMR unboxing of the most viral item on TikTok this week ✨",
+          vpi: 87,
+          pacing: "0-4s Satisfying Peels & Packaging → 4-16s Closeups & Tactile Feedback → 16-30s Live In-Use CTA",
+          scriptBody: [
+            `Unbox the ${selectedProduct.title} with me.`,
+            "That tactile feedback is so satisfying.",
+            "Grab yours directly from the TikTok Shop showcase below!"
+          ],
+          veoPrompt: `Ultra-macro 8K shallow depth of field unboxing, peeling protective film from ${selectedProduct.title}, cozy studio backdrop.`
+        };
+    }
+  };
+
+  const hookData = getHookContent();
+
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', padding: '2rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>TikTok Creator Portal</h1>
-        <div style={{ background: '#eee', padding: '0.5rem 1rem', borderRadius: '8px' }}>
-          Earnings: $1,240.50
+    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '2rem 1.5rem' }}>
+      {/* Top Navigation & Profile Header */}
+      <header className="glass-panel" style={{ padding: '1.25rem 2rem', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #8B5CF6, #06B6D4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem', color: '#fff' }}>
+            AC
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h1 style={{ fontSize: '1.25rem', fontWeight: '700' }}>Alex Chen</h1>
+              <span className="mono-tag" style={{ color: '#C4B5FD' }}>@alexcreates</span>
+              <span className="badge-glow badge-success">✓ Verified Partner</span>
+            </div>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '2px' }}>
+              TokPulse Tier: <strong style={{ color: '#fff' }}>Macro Creator (15% Commission Rate)</strong>
+            </p>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <span className="badge-glow">⚡ Stripe Connect: Active</span>
+          <button className="btn-secondary" style={{ fontSize: '0.8rem', padding: '8px 14px' }}>Payout Settings</button>
         </div>
       </header>
-      <main style={{ marginTop: '2rem' }}>
-        <section>
-          <h2>Trending Products to Promote</h2>
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-            <div
-              style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', flex: 1 }}
-            >
-              <h3>Wireless Earbuds</h3>
-              <p>Commission: 15%</p>
-              <button
-                style={{
-                  background: '#000',
-                  color: '#fff',
-                  padding: '0.5rem 1rem',
-                  border: 'none',
-                  borderRadius: '4px',
-                }}
-              >
-                Generate Affiliate Link
-              </button>
+
+      {/* Live Metric Cards Grid */}
+      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+        <div className="glass-panel" style={{ padding: '1.5rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: '500' }}>Attributed Gross Sales (30d)</p>
+          <h2 style={{ fontSize: '2rem', fontWeight: '800', marginTop: '0.5rem', color: '#fff' }}>$14,850.00</h2>
+          <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ color: '#10B981', fontWeight: '600', fontSize: '0.85rem' }}>↑ +24.5%</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>vs previous period</span>
+          </div>
+        </div>
+
+        <div className="glass-panel" style={{ padding: '1.5rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: '500' }}>Net Commissions Earned</p>
+          <h2 style={{ fontSize: '2rem', fontWeight: '800', marginTop: '0.5rem', color: '#8B5CF6' }}>$2,227.50</h2>
+          <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span className="badge-glow badge-success" style={{ fontSize: '0.75rem' }}>$1,840.00 Paid</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>$387.50 Pending</span>
+          </div>
+        </div>
+
+        <div className="glass-panel" style={{ padding: '1.5rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: '500' }}>Attributed Orders & Conversion</p>
+          <h2 style={{ fontSize: '2rem', fontWeight: '800', marginTop: '0.5rem', color: '#fff' }}>320 Orders</h2>
+          <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ color: '#06B6D4', fontWeight: '600', fontSize: '0.85rem' }}>4.8% CVR</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>(6,650 Total Clicks)</span>
+          </div>
+        </div>
+
+        <div className="glass-panel" style={{ padding: '1.5rem' }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: '500' }}>Avg Viral Propensity (VPI)</p>
+          <h2 style={{ fontSize: '2rem', fontWeight: '800', marginTop: '0.5rem', color: '#10B981' }}>92 / 100</h2>
+          <div style={{ marginTop: '0.75rem' }}>
+            <span style={{ color: '#A7F3D0', fontSize: '0.8rem' }}>🔥 High Algorithmic Lift Expected</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Workspace: AI Script Studio & Affiliate Link Hub */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '2rem', marginBottom: '2.5rem' }}>
+        
+        {/* AI CapCut & Veo Hook Studio */}
+        <div className="glass-panel" style={{ padding: '1.75rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <div>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                ✨ AI Viral Hook & Script Studio
+              </h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>Real-time VPI score optimization for TikTok & Reels</p>
             </div>
-            <div
-              style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', flex: 1 }}
+            <span className="badge-glow" style={{ fontSize: '0.8rem' }}>VPI Score: {hookData.vpi}/100</span>
+          </div>
+
+          <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '6px' }}>Select Hook Angle:</label>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '1.25rem' }}>
+            <button 
+              className={hookStrategy === 'curiosity_gap' ? 'btn-primary' : 'btn-secondary'} 
+              style={{ fontSize: '0.8rem', padding: '8px' }}
+              onClick={() => setHookStrategy('curiosity_gap')}
             >
-              <h3>LED Ring Light</h3>
-              <p>Commission: 10%</p>
-              <button
-                style={{
-                  background: '#000',
-                  color: '#fff',
-                  padding: '0.5rem 1rem',
-                  border: 'none',
-                  borderRadius: '4px',
-                }}
-              >
-                Generate Affiliate Link
-              </button>
+              Curiosity Gap
+            </button>
+            <button 
+              className={hookStrategy === 'contrarian' ? 'btn-primary' : 'btn-secondary'} 
+              style={{ fontSize: '0.8rem', padding: '8px' }}
+              onClick={() => setHookStrategy('contrarian')}
+            >
+              Contrarian Truth
+            </button>
+            <button 
+              className={hookStrategy === 'problem_solution' ? 'btn-primary' : 'btn-secondary'} 
+              style={{ fontSize: '0.8rem', padding: '8px' }}
+              onClick={() => setHookStrategy('problem_solution')}
+            >
+              Fast Problem/Fix
+            </button>
+            <button 
+              className={hookStrategy === 'unboxing' ? 'btn-primary' : 'btn-secondary'} 
+              style={{ fontSize: '0.8rem', padding: '8px' }}
+              onClick={() => setHookStrategy('unboxing')}
+            >
+              ASMR Aesthetic
+            </button>
+          </div>
+
+          {/* Generated Hook & Script Box */}
+          <div style={{ background: 'rgba(0, 0, 0, 0.4)', borderRadius: '12px', padding: '1.25rem', border: '1px solid rgba(255, 255, 255, 0.06)', marginBottom: '1rem' }}>
+            <div style={{ marginBottom: '0.75rem' }}>
+              <span style={{ fontSize: '0.75rem', color: '#A78BFA', fontWeight: '700', textTransform: 'uppercase' }}>Opening Hook (0–3 Seconds)</span>
+              <p style={{ fontSize: '0.95rem', fontWeight: '600', color: '#fff', marginTop: '4px' }}>"{hookData.hook}"</p>
+            </div>
+
+            <div style={{ marginBottom: '0.75rem' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>Recommended Pacing</span>
+              <p style={{ fontSize: '0.85rem', color: '#94A3B8', marginTop: '2px' }}>{hookData.pacing}</p>
+            </div>
+
+            <div style={{ marginBottom: '0.75rem' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>Script Body & CTA</span>
+              <ul style={{ paddingLeft: '1.2rem', marginTop: '4px', fontSize: '0.85rem', color: '#CBD5E1', lineHeight: '1.5' }}>
+                {hookData.scriptBody.map((line, i) => (
+                  <li key={i}>{line}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '0.75rem', marginTop: '0.75rem' }}>
+              <span style={{ fontSize: '0.75rem', color: '#06B6D4', fontWeight: '700', textTransform: 'uppercase' }}>🎥 AI B-Roll Prompt (Veo / Sora / Imagen)</span>
+              <p style={{ fontSize: '0.8rem', color: '#94A3B8', marginTop: '2px', fontStyle: 'italic' }}>{hookData.veoPrompt}</p>
             </div>
           </div>
-        </section>
-      </main>
+
+          <button 
+            className="btn-primary" 
+            style={{ width: '100%' }}
+            onClick={() => copyToClipboard(`HOOK: ${hookData.hook}\n\nSCRIPT:\n${hookData.scriptBody.join('\n')}\n\nAI B-ROLL PROMPT:\n${hookData.veoPrompt}`, true)}
+          >
+            {copiedScript ? '✓ Copied Full Script & Prompt!' : '📋 Copy CapCut Script & AI Prompts'}
+          </button>
+        </div>
+
+        {/* Attribution Link & QR Hub */}
+        <div className="glass-panel" style={{ padding: '1.75rem' }}>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '0.5rem' }}>🔗 Tracked Attribution Link Generator</h3>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
+            Generates a tamper-proof <strong>TokPulse Attribution Token (TAT)</strong> link for direct TikTok bio & video tags.
+          </p>
+
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '6px' }}>Select Target Product:</label>
+            <select 
+              value={selectedProduct.id} 
+              onChange={(e) => {
+                const prod = SAMPLE_PRODUCTS.find(p => p.id === e.target.value) || SAMPLE_PRODUCTS[0];
+                setSelectedProduct(prod);
+                handleGenerateLink(prod);
+              }}
+              style={{ width: '100%', background: 'rgba(0, 0, 0, 0.5)', color: '#fff', border: '1px solid var(--border-subtle)', borderRadius: '8px', padding: '10px', fontSize: '0.9rem' }}
+            >
+              {SAMPLE_PRODUCTS.map(p => (
+                <option key={p.id} value={p.id}>{p.title} (${p.price} | {p.commissionRate}% Comm.)</option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{ background: 'rgba(0, 0, 0, 0.3)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.05)', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Estimated Commission per Sale:</span>
+              <strong style={{ color: '#10B981', fontSize: '1.1rem' }}>
+                ${((selectedProduct.price * selectedProduct.commissionRate) / 100).toFixed(2)} USD
+              </strong>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Attribution Window:</span>
+              <span className="mono-tag" style={{ color: '#C4B5FD' }}>30 Days Server-Side (CAPI)</span>
+            </div>
+          </div>
+
+          <button 
+            className="btn-primary" 
+            style={{ width: '100%', marginBottom: '1rem' }}
+            onClick={() => handleGenerateLink(selectedProduct)}
+          >
+            ⚡ Generate Verified TAT Link
+          </button>
+
+          {generatedLink && (
+            <div style={{ background: 'rgba(0,0,0,0.5)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(139, 92, 246, 0.3)' }}>
+              <span style={{ fontSize: '0.75rem', color: '#A78BFA', fontWeight: '600' }}>YOUR TRACKING LINK:</span>
+              <p className="mono-tag" style={{ wordBreak: 'break-all', marginTop: '6px', fontSize: '0.75rem', color: '#E2E8F0', padding: '8px' }}>
+                {generatedLink}
+              </p>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
+                <button 
+                  className="btn-primary" 
+                  style={{ flex: 1, padding: '8px 12px', fontSize: '0.8rem' }}
+                  onClick={() => copyToClipboard(generatedLink)}
+                >
+                  {copiedLink ? '✓ Copied!' : 'Copy Link'}
+                </button>
+                <button 
+                  className="btn-secondary" 
+                  style={{ padding: '8px 12px', fontSize: '0.8rem' }}
+                  onClick={() => setShowQr(!showQr)}
+                >
+                  {showQr ? 'Hide QR' : 'Show QR Code'}
+                </button>
+              </div>
+
+              {showQr && (
+                <div style={{ marginTop: '12px', textAlign: 'center', padding: '1rem', background: '#fff', borderRadius: '8px' }}>
+                  <div style={{ width: '140px', height: '140px', margin: '0 auto', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold', fontSize: '0.8rem', borderRadius: '4px' }}>
+                    [QR CODE: {selectedProduct.id}]
+                  </div>
+                  <p style={{ color: '#333', fontSize: '0.75rem', marginTop: '6px' }}>Scan for instant TikTok mobile checkout</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* High-Commission Product Showcase Catalog */}
+      <section className="glass-panel" style={{ padding: '1.75rem', marginBottom: '2.5rem' }}>
+        <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1.25rem' }}>🔥 Trending Shopify Catalog to Promote</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          {SAMPLE_PRODUCTS.map(product => (
+            <div 
+              key={product.id} 
+              style={{ background: 'rgba(0,0,0,0.35)', border: '1px solid var(--border-subtle)', borderRadius: '12px', padding: '1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+            >
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                  <span className="badge-glow" style={{ fontSize: '0.7rem' }}>{product.category}</span>
+                  <span style={{ color: '#10B981', fontWeight: '700', fontSize: '0.85rem' }}>{product.commissionRate}% Commission</span>
+                </div>
+                <h4 style={{ fontSize: '1rem', fontWeight: '600', color: '#fff', marginBottom: '6px' }}>{product.title}</h4>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  Retail Price: <strong style={{ color: '#fff' }}>${product.price.toFixed(2)}</strong> (Earn ${(product.price * product.commissionRate / 100).toFixed(2)}/sale)
+                </p>
+              </div>
+
+              <div style={{ marginTop: '1rem', display: 'flex', gap: '8px' }}>
+                <button 
+                  className="btn-primary" 
+                  style={{ flex: 1, padding: '8px', fontSize: '0.8rem' }}
+                  onClick={() => {
+                    setSelectedProduct(product);
+                    handleGenerateLink(product);
+                  }}
+                >
+                  ⚡ Get Link & Script
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Payout History Ledger */}
+      <section className="glass-panel" style={{ padding: '1.75rem' }}>
+        <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '1rem' }}>💳 Payout & Commission History</h3>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)' }}>
+                <th style={{ padding: '10px' }}>Reference</th>
+                <th style={{ padding: '10px' }}>Date</th>
+                <th style={{ padding: '10px' }}>Attributed Orders</th>
+                <th style={{ padding: '10px' }}>Amount (USD)</th>
+                <th style={{ padding: '10px' }}>Method</th>
+                <th style={{ padding: '10px' }}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
+                <td className="mono-tag" style={{ margin: '6px 0', display: 'inline-block' }}>tx_stp_8921a4f</td>
+                <td style={{ padding: '10px' }}>Aug 15, 2026</td>
+                <td style={{ padding: '10px' }}>142 orders</td>
+                <td style={{ padding: '10px', fontWeight: '700', color: '#10B981' }}>$1,120.00</td>
+                <td style={{ padding: '10px' }}>Stripe Direct</td>
+                <td style={{ padding: '10px' }}><span className="badge-glow badge-success">✓ PAID</span></td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
+                <td className="mono-tag" style={{ margin: '6px 0', display: 'inline-block' }}>tx_stp_7741c2e</td>
+                <td style={{ padding: '10px' }}>Aug 01, 2026</td>
+                <td style={{ padding: '10px' }}>98 orders</td>
+                <td style={{ padding: '10px', fontWeight: '700', color: '#10B981' }}>$720.00</td>
+                <td style={{ padding: '10px' }}>Stripe Direct</td>
+                <td style={{ padding: '10px' }}><span className="badge-glow badge-success">✓ PAID</span></td>
+              </tr>
+              <tr>
+                <td className="mono-tag" style={{ margin: '6px 0', display: 'inline-block' }}>tx_pending_batch</td>
+                <td style={{ padding: '10px' }}>Current Period</td>
+                <td style={{ padding: '10px' }}>80 orders</td>
+                <td style={{ padding: '10px', fontWeight: '700', color: '#8B5CF6' }}>$387.50</td>
+                <td style={{ padding: '10px' }}>Stripe Direct</td>
+                <td style={{ padding: '10px' }}><span className="badge-glow" style={{ color: '#FBBF24', borderColor: 'rgba(251, 191, 36, 0.3)' }}>⏳ PENDING</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   );
 }
