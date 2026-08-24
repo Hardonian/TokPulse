@@ -16,5 +16,11 @@ export * from './performance-monitoring';
 export * from './security-hardening';
 // Security utilities
 export * from './security';
+// Zero-Trust Security Guard v2 & SaaS Tier Gating
+export * from './security-guard-v2';
 // Performance utilities (excluding duplicates)
-export { PerformanceBudget as PerformanceBudgetUtil, PerformanceMonitor as PerformanceMonitorUtil, initializePerformanceMonitoring } from './performance';
+export {
+  PerformanceBudget as PerformanceBudgetUtil,
+  PerformanceMonitor as PerformanceMonitorUtil,
+  initializePerformanceMonitoring,
+} from './performance';
