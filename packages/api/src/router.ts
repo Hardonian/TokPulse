@@ -8,6 +8,7 @@ import {
   ApiSchemas,
 } from './validation';
 import { createCreatorRouter } from './creator-routes';
+import { createOmnichannelRouter } from './omnichannel-router';
 
 export interface ApiRouterConfig {
   billingService: any;
@@ -382,6 +383,10 @@ export function createApiRouter(config: ApiRouterConfig): Router {
   // Mount Creator, Attribution & Federation sub-router
   const creatorRouter = createCreatorRouter();
   router.use(creatorRouter);
+
+  // Mount Omnichannel, AI Voiceover, CRM Discovery & Oracle sub-router
+  const omnichannelRouter = createOmnichannelRouter();
+  router.use(omnichannelRouter);
 
   return router;
 }
