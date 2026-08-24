@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@apollo/client": "^3.14.0",
+    "@apollo/client": "^4.2.12",
     "@shopify/app-bridge": "^3.7.10",
     "@shopify/app-bridge-react": "^3.7.10",
     "@shopify/cli": "^3.86.1",
