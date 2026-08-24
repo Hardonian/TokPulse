@@ -7,6 +7,7 @@ import {
   errorResponse,
   ApiSchemas,
 } from './validation';
+import { createCreatorRouter } from './creator-routes';
 
 export interface ApiRouterConfig {
   billingService: any;
@@ -377,6 +378,10 @@ export function createApiRouter(config: ApiRouterConfig): Router {
       }
     },
   );
+
+  // Mount Creator, Attribution & Federation sub-router
+  const creatorRouter = createCreatorRouter();
+  router.use(creatorRouter);
 
   return router;
 }
