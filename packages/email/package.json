@@ -13,7 +13,7 @@
     "@tokpulse/db": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^20.19.23",
+    "@types/node": "^26.2.0",
     "typescript": "^5.9.3"
   }
 }
