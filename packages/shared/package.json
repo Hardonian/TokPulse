@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@types/jest": "^30.0.0",
-    "lru-cache": "^11.2.2",
-    "react": "^19.2.0",
+    "lru-cache": "^11.5.2",
+    "react": "^19.2.8",
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@types/node": "^20.19.23",
-    "@types/react": "^19.2.2",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.2.18",
     "typescript": "^5.9.3"
   }
 }

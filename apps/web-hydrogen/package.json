@@ -10,18 +10,18 @@
     "lint": "eslint src --ext .ts,.tsx --max-warnings 0"
   },
   "dependencies": {
-    "@remix-run/react": "^2.17.1",
+    "@remix-run/react": "^2.17.5",
     "@remix-run/serve": "^2.17.5",
-    "@shopify/hydrogen": "^2024.10.1",
+    "@shopify/hydrogen": "^2024.10.2",
     "@shopify/remix-oxygen": "^1.1.8",
-    "@tokpulse/db": "^0.0.0",
-    "@tokpulse/shared": "^0.0.0",
+    "@tokpulse/db": "workspace:^",
+    "@tokpulse/shared": "workspace:^",
     "react": "^18.3.1",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@types/react": "^18.3.26",
-    "@types/react-dom": "^19.2.4",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^19.2.5",
     "typescript": "^5.9.3"
   }
 }
