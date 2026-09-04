@@ -1,5 +1,9 @@
 # TokPulse — Enterprise Creator-Commerce Operating System
 
+<!-- BEGIN: REPO HERO -->
+![TokPulse — hero generated locally on the GPU stack](assets/repo-hero.png)
+<!-- END: REPO HERO -->
+
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict_Mode-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Turborepo Monorepo](https://img.shields.io/badge/Orchestration-Turborepo-EF4444.svg?logo=turborepo&logoColor=white)](https://turbo.build/)
 [![Zero-Trust Security](https://img.shields.io/badge/Security-Zero--Trust_v2-10B981.svg)](docs/AI_COMPLIANCE.md)
