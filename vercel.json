@@ -1,8 +1,8 @@
 {
   "version": 2,
   "framework": "vite",
-  "installCommand": "npm install -g pnpm@8.15.0 && pnpm install",
-  "buildCommand": "pnpm build",
+  "installCommand": "npx pnpm@8 install",
+  "buildCommand": "npx pnpm@8 build",
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
