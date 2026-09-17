@@ -14,8 +14,8 @@
     "@remix-run/serve": "^2.17.5",
     "@shopify/hydrogen": "^2024.10.1",
     "@shopify/remix-oxygen": "^1.1.8",
-    "@tokpulse/db": "^0.0.0",
-    "@tokpulse/shared": "^0.0.0",
+    "@tokpulse/db": "workspace:*",
+    "@tokpulse/shared": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^19.2.8"
   },
