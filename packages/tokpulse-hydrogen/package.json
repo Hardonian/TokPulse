@@ -19,7 +19,7 @@
     "@apollo/client": "^4.2.12",
     "@shopify/app-bridge": "^3.7.10",
     "@shopify/app-bridge-react": "^3.7.10",
-    "@shopify/cli": "^3.86.1",
+    "@shopify/cli": "^4.8.0",
     "@shopify/graphql-client": "^0.10.4",
     "@shopify/hydrogen": "^2026.4.5",
     "@shopify/hydrogen-react": "^2024.10.1",
