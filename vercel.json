@@ -1,7 +1,7 @@
 {
   "version": 2,
   "framework": "vite",
-  "installCommand": "npx pnpm@9 install",
+  "installCommand": "npx pnpm@9 install --no-frozen-lockfile",
   "buildCommand": "npx pnpm@9 build",
   "outputDirectory": "dist",
   "cleanUrls": true,
