@@ -12,12 +12,12 @@
   "dependencies": {
     "@types/jest": "^30.0.0",
     "lru-cache": "^11.2.2",
-    "react": "^19.2.0",
-    "zod": "^3.25.76"
+    "react": "^19.3.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/node": "^20.19.23",
-    "@types/react": "^19.2.2",
-    "typescript": "^5.9.3"
+    "@types/node": "^26.6.1",
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
   }
 }
