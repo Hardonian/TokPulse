@@ -21,6 +21,6 @@
     "@types/react": "^19.3.0",
     "react": "^19.3.0",
     "typescript": "^7.0.2",
-    "vitest": "^1.6.1"
+    "vitest": "^5.0.2"
   }
 }

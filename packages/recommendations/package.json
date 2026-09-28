@@ -11,15 +11,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "zod": "^4.6.5",
+    "cors": "^2.8.6",
     "express": "^5.2.1",
-    "cors": "^2.8.6"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/node": "^26.6.1",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "@types/cors": "^2.8.17",
+    "@types/node": "^26.6.3",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.2"
   }
 }
