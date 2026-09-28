@@ -10,8 +10,8 @@
     "lint": "eslint src --ext .ts,.tsx --max-warnings 0"
   },
   "dependencies": {
-    "@types/node": "^26.6.1",
-    "lucide-react": "^1.47.0",
+    "@types/node": "^26.6.2",
+    "lucide-react": "^1.48.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
