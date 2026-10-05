@@ -10,9 +10,9 @@
     "lint": "eslint src --ext .ts,.tsx --max-warnings 0"
   },
   "dependencies": {
-    "@remix-run/react": "^2.17.1",
+    "@remix-run/react": "^2.17.5",
     "@remix-run/serve": "^2.17.5",
-    "@shopify/hydrogen": "^2026.4.5",
+    "@shopify/hydrogen": "^2026.4.7",
     "@shopify/remix-oxygen": "^3.0.4",
     "@tokpulse/db": "workspace:*",
     "@tokpulse/shared": "workspace:*",
