@@ -12,11 +12,11 @@
   "dependencies": {
     "@tokpulse/db": "workspace:*",
     "express": "^5.3.0",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "@types/node": "^26.6.4",
+    "@types/node": "^26.6.5",
     "typescript": "^7.0.2"
   }
 }
