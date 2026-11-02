@@ -13,11 +13,11 @@
     "@tokpulse/db": "workspace:*",
     "@tokpulse/rbac": "workspace:*",
     "express": "^5.3.0",
-    "express-rate-limit": "^8.7.1"
+    "express-rate-limit": "^8.7.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "@types/node": "^26.6.4",
+    "@types/node": "^26.6.6",
     "typescript": "^7.0.2"
   }
 }
