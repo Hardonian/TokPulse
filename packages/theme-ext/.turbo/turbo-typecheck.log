@@ -1,4 +1,0 @@
-
-> @tokpulse/theme-ext@0.0.0 typecheck /workspace/packages/theme-ext
-> tsc --noEmit
-

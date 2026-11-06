@@ -1,4 +1,0 @@
-
-> @tokpulse/email@0.0.0 typecheck /workspace/packages/email
-> tsc --noEmit
-

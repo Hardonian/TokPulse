@@ -1,4 +1,0 @@
-
-> @tokpulse/billing@0.0.0 typecheck /workspace/packages/billing
-> tsc --noEmit
-

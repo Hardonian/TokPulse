@@ -1,4 +1,0 @@
-
-> @tokpulse/rbac@0.0.0 typecheck /workspace/packages/rbac
-> tsc --noEmit
-

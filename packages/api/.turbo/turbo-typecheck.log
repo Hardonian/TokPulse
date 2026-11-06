@@ -1,4 +1,0 @@
-
-> @tokpulse/api@0.0.0 typecheck /workspace/packages/api
-> tsc --noEmit
-
