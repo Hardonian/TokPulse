@@ -17,9 +17,9 @@
     "@opentelemetry/instrumentation": "^0.300.0",
     "@opentelemetry/instrumentation-fetch": "^0.300.0",
     "@opentelemetry/instrumentation-http": "^0.300.0",
-    "@opentelemetry/resources": "^3.0.0",
+    "@opentelemetry/resources": "^3.1.0",
     "@opentelemetry/sdk-node": "^0.300.0",
-    "@opentelemetry/semantic-conventions": "^1.44.0",
+    "@opentelemetry/semantic-conventions": "^1.45.0",
     "@types/express": "^5.0.6",
     "express": "^5.3.0",
     "pino": "^10.4.0",
@@ -30,6 +30,6 @@
   "devDependencies": {
     "@types/node": "^26.6.6",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   }
 }
