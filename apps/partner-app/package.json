@@ -10,7 +10,7 @@
     "lint": "eslint src --ext .ts,.tsx --max-warnings 0"
   },
   "dependencies": {
-    "@shopify/shopify-api": "^15.0.1",
+    "@shopify/shopify-api": "^15.1.0",
     "@tokpulse/billing": "workspace:*",
     "@tokpulse/db": "workspace:*",
     "@tokpulse/experiments": "workspace:*",
